@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>UNIAUTO - Diretório Oficial de Comunicação</title>
+
+<style>
+body { font-family: Arial; background:#f4f6f9; padding:30px; }
+.container { background:#fff; padding:25px; border-radius:8px; max-width:1000px; margin:auto; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+h1 { text-align:center; color:#003366; }
+label { font-weight:bold; }
+select,input,textarea { width:100%; padding:8px; margin:8px 0 15px 0; }
+textarea { height:500px; white-space:pre-line; }
+button { background:#003366; color:#fff; padding:10px 15px; border:none; cursor:pointer; border-radius:4px; }
+button:hover { background:#00509e; }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>UNIAUTO - Diretório Oficial de Comunicação</h1>
+
+<label>Categoria:</label>
+<select id="categoria" onchange="gerarMensagem()">
+<option value="">Selecione...</option>
+<option value="reembolso_onibus">REEMBOLSO ÔNIBUS</option>
+<option value="reembolso_taxi">REEMBOLSO TAXI/UBER</option>
+<option value="reembolso_hospedagem">REEMBOLSO HOSPEDAGEM</option>
+<option value="colisao">LINK DE ABERTURA PARA COLISÃO</option>
+<option value="roubo">LINK DE ABERTURA PARA ROUBO/FURTO</option>
+<option value="cond6">CONDICIONAMENTO DOS 6 MESES</option>
+<option value="cond6_comp">CONDICIONAMENTO 6 MESES + COMPENSAÇÃO</option>
+<option value="utilizou_mes">ASSOCIADO QUE JÁ UTILIZOU NO MÊS</option>
+<option value="inadimplente">ASSOCIADO INADIMPLENTE</option>
+<option value="app">PARA ACESSAR O APLICATIVO</option>
+<option value="oficina">OFICINA MAIS PRÓXIMA</option>
+<option value="prestador">DIFICULDADE DE LOCALIZAR PRESTADOR</option>
+</select>
+
+<label>Nome do Associado:</label>
+<input type="text" id="nome" oninput="gerarMensagem()">
+
+<label>Data do Atendimento:</label>
+<input type="date" id="data" oninput="gerarMensagem()">
+
+<label>Campo Complementar (valor / vencimento / data utilização / cidade):</label>
+<input type="text" id="extra" oninput="gerarMensagem()">
+
+<label>Mensagem Gerada:</label>
+<textarea id="mensagem"></textarea>
+
+<button onclick="copiarMensagem()">Copiar Mensagem</button>
+
+</div>
+
+<script>
+
+function formatarData(data){
+if(!data) return "";
+const p=data.split("-");
+return p[2]+"/"+p[1]+"/"+p[0];
+}
+
+function gerarMensagem(){
+
+const cat=document.getElementById("categoria").value;
+const nome=document.getElementById("nome").value;
+const data=formatarData(document.getElementById("data").value);
+const extra=document.getElementById("extra").value;
+
+let texto="";
+
+switch(cat){
+
+case "reembolso_onibus":
+texto=`Prezado(a) ${nome},
+
+Conforme previsto no regulamento, o seu plano oferece, em casos de pane ou sinistro por
+colisão que necessitem do serviço de reboque, o direito ao transporte de retorno ao domicílio
+ou à continuação da viagem para você e seus acompanhantes (respeitando a capacidade legal
+do veículo, limitada a até 05 pessoas).
+
+📍 Regras para utilização do benefício
+O transporte fornecido será terrestre (ônibus), com valor limitado ao equivalente da passagem
+rodoviária.
+Para continuação da viagem, a distância deverá ser equivalente à de retorno ao município de
+domicílio.
+O pagamento do serviço será realizado mediante reembolso.
+
+📍 Procedimento para solicitação de reembolso
+Apresente nota fiscal emitida em nome da Uniauto Brasil.
+CNPJ: 46.722.227/0001-41
+Razão Social: Uniauto Brasil
+
+Caso apresente recibo timbrado não fiscal, o valor será abatido diretamente na sua
+mensalidade.
+
+Em caso de utilização de aplicativo de transporte (ex.: Uber), será necessário apresentar o
+recibo detalhado da corrida.
+
+Não serão aceitos pedidos de reembolso apenas com comprovante de pagamento (ex.:
+comprovante de cartão ou transferência).
+
+📍 Forma de pagamento do reembolso
+Com nota fiscal: depósito bancário.
+Com recibo timbrado (não fiscal): desconto no valor da mensalidade.
+
+📍 Contato para solicitação de reembolso
+Telefone: (62) 9864-6712 ou (62) 98127096 - Financeiro`;
+break;
+
+case "reembolso_taxi":
+texto=`Prezado(a) ${nome},
+
+Conforme estabelecido no regulamento, o seu plano oferece, em casos de pane ou sinistro, o
+direito ao transporte executivo (táxi ou aplicativo, como Uber) para o retorno dos ocupantes ao
+endereço de residência previamente cadastrado.
+
+📍 Regras para utilização do benefício
+Raio máximo de atendimento: até 50 km a partir do endereço de domicílio do
+associado/usuário.
+Valor máximo coberto: R$100,00.
+Capacidade: até 04 (quatro) pessoas.
+
+Caso a distância ultrapasse o limite contratado, o valor excedente será de responsabilidade do
+associado.
+
+📍 Procedimento para reembolso
+Apresente nota fiscal emitida em nome da Uniauto Brasil:
+CNPJ: 46.722.227/0001-41
+Razão Social: Uniauto Brasil
+
+Caso seja apresentado recibo timbrado não fiscal, o valor será descontado diretamente na
+mensalidade.
+
+Para corridas realizadas por aplicativo (Uber, etc.), é obrigatório apresentar o recibo detalhado
+da viagem.
+
+Não serão aceitos pedidos de reembolso somente com comprovante de pagamento (ex.:
+comprovante de cartão ou transferência).
+
+📍 Forma de pagamento do reembolso
+Com nota fiscal: depósito bancário.
+Com recibo não fiscal: desconto no valor da mensalidade.
+
+📍 Contatos para solicitação de reembolso
+Telefone: (62) 9864-6712 ou (62) 98127096 – Financeiro`;
+break;
+
+case "reembolso_hospedagem":
+texto=`Prezado(a) ${nome},
+
+Conforme previsto no regulamento, o seu plano oferece, em situações em que não seja
+disponibilizado e utilizado o Meio de Transporte Alternativo, o direito à hospedagem para você
+e seus acompanhantes (respeitando a capacidade legal do veículo, limitada a até 05 pessoas).
+
+📍 Regras para utilização do benefício
+Quantidade: 01 (uma) diária em hotel.
+Limite financeiro: R$80,00 por diária por pessoa.
+A utilização do serviço de hospedagem exclui automaticamente o direito ao serviço de meio de
+Transporte Alternativo.
+
+📍 Procedimento para reembolso
+Apresente nota fiscal emitida em nome da Uniauto Brasil:
+CNPJ: 46.722.227/0001-41
+Razão Social: Uniauto Brasil
+
+Caso seja apresentado recibo timbrado não fiscal, o valor será descontado diretamente na
+mensalidade.
+
+📍 Forma de pagamento do reembolso
+Com nota fiscal: depósito bancário.
+Com recibo não fiscal: desconto na mensalidade.
+
+📍 Contato para solicitação de reembolso
+Telefone: (62) 9864-6712 ou (62) 98127096 - Financeiro`;
+break;
+
+
+case "colisao":
+texto=`Prezado(a) ${nome},
+
+A primeira providência necessária é realizar a abertura de evento e anexar a seguinte
+documentação obrigatória:
+
+Data do atendimento: ${data}
+
+✅ CNH (legível e em bom estado)
+✅ CRLV (em PDF ou foto nítida)
+✅ Fotos do evento e do veículo
+✅ Vídeo do veículo, apresentando as avarias (colisão, pneus, entre outros detalhes)
+✅ Vídeo amplo do local do evento, narrando a colisão com o máximo de detalhes possível
+✅ Boletim de Ocorrência – deve ser enviado no prazo máximo de 2 horas
+
+📍 Em caso de terceiro envolvido no evento, enviar também:
+✅ CNH (legível e em bom estado)
+✅ CRLV (em PDF ou foto nítida)
+✅ Fotos e vídeos do veículo do terceiro, se houver
+
+📎 Link para abertura de evento:
+https://abertura.veico.com.br/uniauto
+
+Após o envio completo da documentação e a abertura do evento, você será informado(a) sobre
+a continuidade do processo no prazo de até 10 (dez) dias úteis.
+
+📞 Dúvidas ou suporte:
+Telefone/WhatsApp: (62) 9467-3272`;
+break;
+
+
+case "roubo":
+texto=`Prezado(a) ${nome},
+
+Solicitamos que realize a abertura de evento o quanto antes e anexe a seguinte documentação
+obrigatória:
+
+Data do atendimento: ${data}
+
+✅ CNH (legível e em bom estado)
+✅ CRLV (em PDF ou foto nítida)
+✅ Fotos do local do roubo/furto e do veículo
+✅ Vídeo de câmeras de segurança, caso disponível
+✅ Vídeo amplo do local do evento, narrando a situação com o máximo de detalhes possível
+✅ Boletim de Ocorrência – deve constar a informação: "Veículo possui proteção veicular da
+Uniauto Brasil"
+
+📎 Link para abertura de evento:
+https://abertura.veico.com.br/uniauto
+
+📍 Informações importantes:
+Após o envio completo da documentação e a abertura do evento, você será informado(a) sobre
+a continuidade do processo no prazo de até 10 (dez) dias úteis.
+
+📞 Dúvidas ou suporte:
+Telefone/WhatsApp: (62) 9467-3272`;
+break;
+
+
+case "cond6":
+texto=`Prezado(a) ${nome},
+
+Recebemos a sua solicitação e, conforme previsto no regulamento, após a utilização de
+qualquer benefício ou amparo da associação, o(a) senhor(a) ficará condicionado(a) a
+permanecer na associação por 6 (seis) meses.
+
+O(a) senhor(a) confirma estar ciente desta cláusula para que possamos prosseguir com o
+atendimento?`;
+break;
+
+
+case "cond6_comp":
+texto=`Prezado(a) ${nome},
+
+Recebemos a sua solicitação e, conforme previsto no regulamento, após a utilização de
+qualquer benefício ou amparo da associação, o(a) senhor(a) ficará condicionado(a) a
+permanecer na associação por 6 (seis) meses.
+
+O(a) senhor(a) confirma estar ciente desta cláusula para que possamos prosseguir com o
+atendimento?
+
+Ressaltando também que a liberação feita compensando a utilização do mês seguinte,
+podemos prosseguir?`;
+break;
+
+case "utilizou_mes":
+texto=`Prezado(a) ${nome},
+
+Informamos que neste mês foi registrada a utilização do serviço de guincho referente à sua
+proteção veicular dia ${extra}.
+
+Conforme as regras do contrato, o serviço de guincho pode ser utilizado uma vez por mês
+dentro do limite de Km contratado em caso de Pane sendo ela Elétrica ou Mecânica, e a
+próxima liberação estará disponível a partir do próximo mês.`;
+break;
+
+
+case "inadimplente":
+texto=`Prezado(a) ${nome},
+
+Verificamos em nosso sistema e o senhor(a), encontra-se em situação de inadimplência, com
+boleto em aberto no valor de ${extra}.
+
+Informamos que a Associação concede um período de tolerância de até 5 (cinco) dias corridos
+após a data de vencimento constante na ficha cadastral de filiação para o pagamento da
+contribuição mensal. Ultrapassado esse prazo de tolerância, ou seja, após os dias 10 e/ou 20
+de cada mês, o Associado será considerado automaticamente inadimplente, perdendo o direito
+de requerer quaisquer benefícios ou amparos junto à Associação enquanto perdurar tal
+situação.`;
+break;
+
+
+case "app":
+texto=`🚗💥 Fique por dentro de tudo sobre a sua proteção veicular! 💥🚗
+
+Agora ficou muito mais fácil acompanhar seus eventos, boletos, atendimentos e muito mais!
+📲✨
+
+Acesse já o App do Associado:
+👉 https://associado.veico.com.br/uniauto
+
+Login: CPF
+Senha: Data de nascimento
+
+Não perca tempo! Mantenha-se informado e protegido sempre.
+
+UNIAUTO BRASIL
+Sempre com você`;
+break;
+
+
+case "oficina":
+texto=`Senhor(a) ${nome}, entendemos sua solicitação, no entanto o serviço da assistência 24 horas é retirar o
+associado da zona de risco/ perigo enviando para a oficina mais próxima num raio de
+quilometragem do plano escolhido.
+
+Para que possamos dar continuidade no atendimento o senhor(a) pode estar verificando
+alguma oficina na cidade ${extra} e nos informando o endereço para que possamos acionar o
+reboque. Ficamos no seu aguardo.`;
+break;
+
+
+case "prestador":
+texto=`Caro(a) ${nome}, sentimos pela demora, no momento não estamos conseguindo localizar
+um prestador disponível na sua região, seria possível o senhor(a) permanecer na cidade de
+origem e agendarmos o reboque para amanhã no primeiro horário?
+
+Caso não seja, não se preocupe iremos continuar tentando localizar algum prestador disponível,
+no entanto, ainda estamos sem previsão de realizar o serviço. Como deseja prosseguir?`;
+break;
+
+}
+
+document.getElementById("mensagem").value=texto;
+}
+
+function copiarMensagem(){
+const t=document.getElementById("mensagem");
+t.select();
+document.execCommand("copy");
+alert("Mensagem copiada com sucesso!");
+}
+
+</script>
+</body>
+</html>
